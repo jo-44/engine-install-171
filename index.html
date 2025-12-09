@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2008 Acura RDX Engine Installation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            padding: 60px;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #ffd700;
+        }
+
+        .slide-content {
+            font-size: 2em;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 90%;
+            background: rgba(0,0,0,0.3);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .step-number {
+            font-size: 1.2em;
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .step-content {
+            font-size: 1em;
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .tools-list, .notes-list {
+            font-size: 1.2em;
+            line-height: 2;
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+
+        .tools-list li, .notes-list li {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .tools-list li:before {
+            content: "🔧";
+            position: absolute;
+            left: 0;
+        }
+
+        .notes-list li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: rgba(255, 215, 0, 0.9);
+            color: #1a1a1a;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-button:hover {
+            background: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .nav-button:active {
+            transform: translateY(0);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.6);
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            z-index: 1000;
+        }
+
+        .special-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .tool-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .tool-name {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .tool-part {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .step-image {
+            max-width: 100%;
+            max-height: 50vh;
+            margin: 30px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.95);
+            padding: 10px;
+        }
+
+        .step-content-with-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .step-text {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">1</span>
+        </div>
+
+        <!-- Engine Installation Title Slide -->
+        <div class="slide active" data-slide="0">
+            <div class="slide-content">
+                <div class="section-title">Engine Installation</div>
+                <div style="font-size: 1.5em; margin-top: 40px; color: #ccc;">Follow the steps in reverse order with installation procedures</div>
+            </div>
+        </div>
+
+        <!-- Engine Installation Steps will be inserted here -->
+        <div id="installation-steps-container"></div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prev-btn">← Previous</button>
+        <button class="nav-button" id="next-btn">Next →</button>
+    </div>
+
+    <script>
+        // Step data with image mappings (step index: page number)
+        const stepImages = {
+            0: "images/page_34_img_1.png",   // Step 1 - Fig 31
+            1: "images/page_35_img_1.png",   // Step 2 - Fig 32
+            2: "images/page_36_img_1.png",   // Step 3 - Fig 33
+            3: "images/page_37_img_1.png",   // Step 4 - Fig 34
+            4: "images/page_38_img_1.png",   // Step 5 - Fig 35
+            5: "images/page_39_img_1.png",   // Step 6 - Fig 36
+            7: "images/page_40_img_1.png",   // Step 8 - Fig 37
+            8: "images/page_41_img_1.png",   // Step 9 - Fig 38
+            9: "images/page_42_img_1.png",   // Step 10 - Fig 39
+            13: "images/page_43_img_1.png",  // Step 14 - Fig 40
+            14: "images/page_44_img_1.png",  // Step 15 - Fig 41
+            15: "images/page_45_img_1.png",  // Step 16 - Fig 42
+            17: "images/page_46_img_1.png",  // Step 18 - Fig 43
+            20: "images/page_47_img_1.png",  // Step 21 - Fig 44
+            22: "images/page_48_img_1.png",  // Step 23 - Fig 45
+            23: "images/page_49_img_1.png",  // Step 24 - Fig 46
+            28: "images/page_50_img_1.png",  // Step 29 - Fig 47
+            29: "images/page_51_img_1.png",  // Step 30 - Fig 48
+            32: "images/page_52_img_1.png",  // Step 33 - Fig 49
+            34: "images/page_53_img_1.png",  // Step 35 - Fig 50
+            35: "images/page_54_img_1.png",  // Step 36 - Fig 51
+            37: "images/page_55_img_1.png",  // Step 38 - Fig 52
+            40: "images/page_56_img_1.png",  // Step 41 - Fig 53
+            41: "images/page_57_img_1.png",  // Step 42 - Fig 54
+            42: "images/page_58_img_1.png",  // Step 43 - Fig 55
+            43: "images/page_59_img_1.png",  // Step 44 - Fig 56
+            44: "images/page_60_img_1.png",  // Step 45 - Fig 57
+            46: "images/page_61_img_1.png",  // Step 47 - Fig 58
+            48: "images/page_62_img_1.png",  // Step 49 - Fig 59
+            49: "images/page_63_img_1.png",  // Step 50 - Fig 60
+            50: "images/page_64_img_1.png"   // Step 51 - Fig 61
+        };
+
+        const installationSteps = [
+            "Install the accessory brackets and tighten their bolts to the specified torque.",
+            "Raise the vehicle on the lift, and position the engine/transmission assembly under the vehicle. Lower the vehicle and attach the universal eyelet (A) and transmission hook (B) to the chain hoist, then lift the engine into position. NOTE: Reinstall the mounting bolts/support nuts in the sequence given in the following steps.",
+            "Attach the engine support eyelet with the support bolt.",
+            "Place the engine support mount pads over the hood edge cushions (A), and align the pins with the clip hole (B). Remove the lids from both sides of the cowl cover. Install the engine support hanger (AAR-T-12566), then attach the hook to the engine support eyelet. Tighten the wing nut (C) by hand to lift and support the engine/transmission assembly.",
+            "Loosen the upper torque rod mounting bolt (A).",
+            "Tighten the new side engine mount bracket mounting bolt and nut.",
+            "Remove the chain hoist.",
+            "Remove the universal eyelet from the drive belt auto-tensioner.",
+            "Remove the transmission hanger bracket (P/N 21232-RCT-A00).",
+            "Install the transmission mount, then tighten the transmission mount stiffener mounting bolts (A) and the new transmission mount mounting bolts (B).",
+            "Tighten the new bolt and nuts (C).",
+            "Install the harness clamps (D).",
+            "Raise the vehicle on the lift to full height.",
+            "Using the subframe adapter (A) and a jack, raise the subframe up to the body.",
+            "Loosely install the new 14 x 1.5 mm bolts (A), the 12 x 1.25 mm bolts (B), and the new 12 x 1.25 mm bolts (C).",
+            "Align all reference marks (A) on the front subframe (B) with the body, then tighten the bolts on the front subframe to the specified torque.",
+            "Remove the jack and front subframe adapter.",
+            "Install the lower torque rod, then tighten the new lower torque rod mounting bolts in the numbered sequence shown.",
+            "Lower the vehicle on the lift.",
+            "Remove the special tools from the engine and vehicle, then install the top corner clip to the front grille on both sides.",
+            "Tighten the upper torque rod mounting bolt.",
+            "Raise the vehicle on the lift to full height.",
+            "Install the bolts securing the steering gearbox mounting brackets.",
+            "Install the power steering (P/S) fluid line bracket (A), and secure the hose with the hose clamps (B).",
+            "Install the propeller shaft to the transfer companion flange (see PROPELLER SHAFT INSTALLATION).",
+            "Install a new set ring on the end of each driveshaft, then install the driveshafts. Make sure each ring \"clicks\" into place in the differential and intermediate shaft.",
+            "Connect the lower arms to the knuckles (see step 8 under LOWER BALL JOINT REPLACEMENT).",
+            "Connect the stabilizer links to the stabilizer bar (see STABILIZER LINK REMOVAL/INSTALLATION).",
+            "Install the three way catalytic converter (TWC) (A). Use new gaskets (B) and new self-locking nuts (C).",
+            "Install the splash shield.",
+            "Install the front wheels.",
+            "Lower the vehicle on the lift.",
+            "Install the automatic transmission fluid (ATF) cooler hoses (A), and secure the hoses with the clips (B) (see ATF COOLER HOSE REPLACEMENT).",
+            "Install the ground cable (C).",
+            "Install the heater hoses.",
+            "Install the A/C compressor (A), then connect the A/C compressor clutch connector (B).",
+            "Install the radiator (see RADIATOR REPLACEMENT).",
+            "Install the P/S pump (A), then install the P/S hose to the clamp (B).",
+            "Install the drive belt (see DRIVE BELT REMOVAL/INSTALLATION).",
+            "Install the shift cable (see SHIFT CABLE REPLACEMENT).",
+            "Install the evaporative emission (EVAP) canister hose (A), brake booster vacuum hose (B), and vacuum hose (C).",
+            "Install heater hose clamp bracket (A), then install the heater hoses to the clamps (B).",
+            "Connect the fuel feed hose (A) (see FUEL LINE/QUICK-CONNECT FITTING INSTALLATION), then install the quick-connect fitting cover (B).",
+            "Install the under-hood fuse/relay box to the bracket.",
+            "Connect the powertrain control module (PCM) connectors (A) and engine wire harness connector (B).",
+            "Install the harness clamps (C).",
+            "Install the battery cables (A) to the under-hood fuse/relay box.",
+            "Connect the harness connector (B).",
+            "Install the air bypass outlet pipe (A).",
+            "Install the charge air cooler cover front bracket (A), then install the charge air cooler cover (B).",
+            "Install the battery base (A), then install the harness clamps (B) and relay block (C).",
+            "Install the air cleaner housing assembly (see AIR CLEANER REMOVAL/INSTALLATION).",
+            "Install the battery. Clean the battery posts and cable terminals, then assemble them, and apply grease to prevent corrosion.",
+            "Move the shift lever to each gear, and verify that the A/T gear position indicator follows the transmission range switch.",
+            "Inspect for fuel leaks: Turn the ignition switch ON (II) (do not operate the starter) so the fuel pump runs for about 2 seconds and pressurizes the fuel line. Repeat this operation two or three times, then check for fuel leakage at any point in the fuel line.",
+            "Refill the engine with engine oil (see step 4 under ENGINE OIL REPLACEMENT).",
+            "Refill the transmission with ATF (see ATF REPLACEMENT).",
+            "Refill the radiator with engine coolant, and bleed air from the cooling system with the heater valve open (see step 6 under COOLANT REPLACEMENT).",
+            "Do the PCM reset procedure (see HDS CLEAR COMMAND).",
+            "Do the crankshaft position (CKP) pattern clear/CKP pattern learn procedure (see HDS CLEAR COMMAND).",
+            "Inspect the idle speed (see IDLE SPEED INSPECTION).",
+            "Inspect the ignition timing (see IGNITION TIMING INSPECTION).",
+            "Check the wheel alignment (see WHEEL ALIGNMENT).",
+            "Set the clock (on vehicles without navigation)."
+        ];
+
+        // Create installation step slides
+        const installationContainer = document.getElementById('installation-steps-container');
+        installationSteps.forEach((step, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            slide.setAttribute('data-slide', index + 1);
+            
+            // Check if this step has an associated image
+            const hasImage = stepImages.hasOwnProperty(index);
+            const imageHtml = hasImage ? `<img src="${stepImages[index]}" alt="Step ${index + 1} Diagram" class="step-image" />` : '';
+            
+            slide.innerHTML = `
+                <div class="slide-content step-content-with-image">
+                    <div class="section-title" style="margin-bottom: 40px;">Engine Installation</div>
+                    <div class="step-number">Step ${index + 1}</div>
+                    <div class="step-text step-content">${step}</div>
+                    ${imageHtml}
+                </div>
+            `;
+            installationContainer.appendChild(slide);
+        });
+
+        // Navigation logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            if (n >= totalSlides) {
+                currentSlide = 0;
+            } else if (n < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = n;
+            }
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+
+            // Scroll to top of slide
+            slides[currentSlide].scrollTop = 0;
+        }
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                showSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
